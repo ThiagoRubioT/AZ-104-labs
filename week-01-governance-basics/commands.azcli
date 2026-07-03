@@ -12,6 +12,9 @@ az group show \
   --name rg-az104-wk01-core-shell-lab \
   --output table
 
+az group list \
+ --output table
+
 # Delete Resource Group
 az group delete \
   --name rg-az104-wk01-core-shell-lab \
@@ -21,3 +24,5 @@ az group delete \
  --name rg-az104-wk01-core-lab \
  --yes \
  --no-wait
+az group delete \
+ --name cloud-shell-storage-eastus --yes

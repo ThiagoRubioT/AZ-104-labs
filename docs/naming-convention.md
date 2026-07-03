@@ -1,4 +1,3 @@
-```markdown
 # Convenção de Nomes
 
 Este documento descreve o padrão de nomenclatura utilizado nos laboratórios da certificação AZ-104.

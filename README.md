@@ -44,7 +44,7 @@ Este repositório faz parte da minha transição e aprofundamento em **Azure Adm
 ## Estrutura do repositório
 
 ```text
-AZ104-Labs/
+AZ104-labs/
 ├── README.md
 ├── week-01-governance-basics/
 │   ├── README.md

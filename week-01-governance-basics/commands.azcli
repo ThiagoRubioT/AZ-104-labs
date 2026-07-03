@@ -1,28 +1,36 @@
 ```bash
 # AZ-104 Lab 01 - Resource Group and Tags
 
-# Create Resource Group
+# Create Resource Group using Azure CLI
 az group create \
   --name rg-az104-wk01-core-shell-lab \
   --location eastus \
-  --tags Owner=Thiago Purpose='AZ-104 Study' Environment=Lab Week=01 DeleteAfter=2026-10-31 CostCenter=Study
+  --tags Owner=Thiago Purpose="AZ-104 Study" Environment=Lab Week=01 DeleteAfter=2026-10-31 CostCenter=Study
 
-# Validate Resource Group
+# Validate specific Resource Group
 az group show \
   --name rg-az104-wk01-core-shell-lab \
   --output table
 
+# List Resource Groups
 az group list \
- --output table
+  --output table
 
-# Delete Resource Group
+# Delete Resource Group created by CLI
 az group delete \
   --name rg-az104-wk01-core-shell-lab \
   --yes \
   --no-wait
+
+# Delete Resource Group created by Portal
 az group delete \
- --name rg-az104-wk01-core-lab \
- --yes \
- --no-wait
+  --name rg-az104-wk01-core-lab \
+  --yes \
+  --no-wait
+
+# Optional: delete Cloud Shell storage Resource Group
+# Warning: this may remove persistent Cloud Shell files.
 az group delete \
- --name cloud-shell-storage-eastus --yes
+  --name cloud-shell-storage-eastus \
+  --yes \
+  --no-wait

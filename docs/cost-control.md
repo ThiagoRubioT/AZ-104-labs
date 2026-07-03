@@ -1,4 +1,3 @@
-```markdown
 # Controle de Custos
 
 Este documento descreve as práticas de controle de custos utilizadas nos laboratórios da certificação AZ-104.

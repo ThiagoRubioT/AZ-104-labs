@@ -114,3 +114,23 @@ AZ104-labs/
     ├── naming-convention.md
     ├── cost-control.md
     └── security-notes.md
+
+## Lab Progress
+
+| Week | Topic | Status |
+|---|---|---|
+| Week 01 | Governance basics, Resource Groups and tags | In progress |
+| Week 02 | Microsoft Entra ID and RBAC | Planned |
+| Week 03 | RBAC, Policy, locks and governance | Planned |
+| Week 04 | Storage Accounts | Planned |
+| Week 05 | Blob Storage, Azure Files and lifecycle | Planned |
+| Week 06 | ARM, Bicep and automation | Planned |
+| Week 07 | Virtual Machines | Planned |
+| Week 08 | Scale Sets, App Service and containers | Planned |
+| Week 09 | VNets, subnets and DNS | Planned |
+| Week 10 | NSG, routes and VNet peering | Planned |
+| Week 11 | Bastion, Private Endpoints and Load Balancer | Planned |
+| Week 12 | Monitor, Log Analytics and alerts | Planned |
+| Week 13 | Backup and Recovery Services | Planned |
+| Week 14 | Final integrated project | Planned |
+| Week 15 | Exam review and readiness | Planned |

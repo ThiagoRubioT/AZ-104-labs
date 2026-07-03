@@ -1,3 +1,4 @@
+```markdown
 # Convenção de Nomes
 
 Este documento descreve o padrão de nomenclatura utilizado nos laboratórios da certificação AZ-104.
@@ -8,9 +9,8 @@ O objetivo da convenção de nomes é manter os recursos do Azure organizados, f
 
 ## Padrão geral
 
-```text
 <tipo-do-recurso>-az104-wk<numero-da-semana>-<finalidade>-lab
-```
+
 ## Exemplos
 
 | Recurso                 | Exemplo                  |

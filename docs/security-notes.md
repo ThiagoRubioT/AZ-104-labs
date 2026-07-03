@@ -1,8 +1,3 @@
-
----
-
-## `docs/security-notes.md`
-
 ```markdown
 # Notas de Segurança
 

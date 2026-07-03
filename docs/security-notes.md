@@ -1,4 +1,3 @@
-```markdown
 # Notas de Segurança
 
 Este documento descreve as práticas de segurança aplicadas nos laboratórios da certificação AZ-104.

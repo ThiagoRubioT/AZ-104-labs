@@ -1,0 +1,23 @@
+```bash
+# AZ-104 Lab 01 - Resource Group and Tags
+
+# Create Resource Group
+az group create \
+  --name rg-az104-wk01-core-shell-lab \
+  --location eastus \
+  --tags Owner=Thiago Purpose='AZ-104 Study' Environment=Lab Week=01 DeleteAfter=2026-10-31 CostCenter=Study
+
+# Validate Resource Group
+az group show \
+  --name rg-az104-wk01-core-shell-lab \
+  --output table
+
+# Delete Resource Group
+az group delete \
+  --name rg-az104-wk01-core-shell-lab \
+  --yes \
+  --no-wait
+az group delete \
+ --name rg-az104-wk01-core-lab \
+ --yes \
+ --no-wait

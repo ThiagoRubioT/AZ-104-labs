@@ -30,7 +30,12 @@ Criar um Resource Group no Azure usando Portal e Azure CLI, aplicando tags para 
 - Azure CLI permite criar recursos de forma rápida e reproduzível.
 - Separar recursos por semana/lab facilita limpeza e controle de custos.
 
+## Comandos utilizados
+
+Os comandos completos estão disponíveis em: [`commands.azcli`](./commands.azcli)
+
 ## Limpeza dos recursos
+Para evitar custos desnecessários, os recursos criados neste laboratório podem ser removidos com o comando abaixo:
 
 ```bash
 az group delete \
@@ -41,12 +46,5 @@ az group delete \
   --name rg-az104-wk01-core-lab \
   --yes \
   --no-wait
-
-## Comando utilizado
-```bash
-az group create \
-  --name rg-az104-wk01-core-shell-lab \
-  --location eastus \
-  --tags Owner=Thiago Purpose='AZ-104 Study' Environment=Lab Week=01 DeleteAfter=2026-10-31 CostCenter=Study
 
 

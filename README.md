@@ -9,7 +9,7 @@ O objetivo é consolidar conhecimentos de administração Azure por meio de labo
 Criar um portfólio técnico com laboratórios práticos de Azure, demonstrando capacidade de:
 
 - Administrar recursos no Microsoft Azure.
-- Organizar ambientes com Resource Groups, tags e naming convention.
+- Organizar ambientes com Resource Groups, tags e convenção de nomes.
 - Aplicar boas práticas de governança e controle de custos.
 - Configurar Azure RBAC e permissões por escopo.
 - Implementar Storage Accounts, Blob Storage e Azure Files.
@@ -21,7 +21,8 @@ Criar um portfólio técnico com laboratórios práticos de Azure, demonstrando 
 
 ## Contexto
 
-Tenho experiência em infraestrutura, Active Directory, GPO, DNS, DHCP, VMware, SCCM, Windows Server, segurança e IAM.  
+Tenho experiência em infraestrutura, Active Directory, GPO, DNS, DHCP, VMware, SCCM, Windows Server, segurança e IAM.
+
 Este repositório faz parte da minha transição e aprofundamento em **Azure Administration, Cloud Security, Microsoft Entra ID e Azure Security Engineering**.
 
 ## Tecnologias e ferramentas utilizadas
@@ -51,70 +52,25 @@ AZ-104-labs/
 │   ├── commands.azcli
 │   └── screenshots/
 ├── week-02-entra-id-rbac/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-03-rbac-policy-governance/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-04-storage-accounts/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-05-blob-files-lifecycle/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-06-arm-bicep-automation/
-│   ├── README.md
-│   ├── commands.azcli
-│   ├── templates/
-│   └── screenshots/
 ├── week-07-virtual-machines/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-08-scale-app-containers/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-09-vnet-subnets-dns/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-10-nsg-routes-peering/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-11-bastion-private-endpoints-lb/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-12-monitor-log-analytics-alerts/
-│   ├── README.md
-│   ├── queries.kql
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-13-backup-recovery/
-│   ├── README.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-14-final-project/
-│   ├── README.md
-│   ├── architecture.md
-│   ├── commands.azcli
-│   └── screenshots/
 ├── week-15-exam-review/
-│   ├── README.md
-│   ├── wrong-questions.md
-│   └── notes.md
 └── docs/
     ├── study-notes.md
     ├── naming-convention.md
     ├── cost-control.md
     └── security-notes.md
-```
+````
 
 ## Lab Progress
 

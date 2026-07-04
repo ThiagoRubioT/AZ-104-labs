@@ -1,97 +1,96 @@
-# Notas de Segurança
+# Azure Security Notes
 
-Este documento descreve as práticas de segurança aplicadas nos laboratórios da certificação AZ-104.
+This document summarizes the security practices adopted throughout this repository.
 
-## Objetivo
+The objective is to execute Azure laboratories following security best practices while avoiding exposure of sensitive information.
 
-O objetivo é executar laboratórios Azure de forma segura, evitando exposição de dados sensíveis e aplicando boas práticas básicas de Cloud Security.
+---
 
-## Informações sensíveis que não devem ser publicadas
+# Sensitive Information
 
-As seguintes informações não devem ser publicadas neste repositório:
+The following information is never published:
 
-- Subscription ID.
-- Tenant ID.
-- Client ID.
-- Client Secret.
-- Access Keys.
-- SAS Tokens.
-- Senhas.
-- Chaves privadas.
-- E-mails pessoais ou corporativos sensíveis.
-- IPs públicos usados para acesso pessoal.
-- Dados reais de empresas.
-- Nomes internos de ambientes corporativos.
-- Informações de clientes ou terceiros.
+- Subscription ID
+- Tenant ID
+- Client ID
+- Client Secrets
+- Storage Access Keys
+- SAS Tokens
+- Passwords
+- Private Keys
+- Personal or corporate email addresses
+- Corporate environment information
 
-## Cuidados com screenshots
+---
 
-Antes de publicar prints no GitHub, validar se não aparecem informações sensíveis.
+# Screenshot Guidelines
 
-Itens que devem ser ocultados ou removidos:
+Before publishing screenshots, verify that they do not expose sensitive information.
 
-- Subscription ID.
-- Tenant ID.
-- Nome completo da assinatura, se for sensível.
-- E-mail ou UPN da conta.
-- Access keys.
-- SAS URLs.
-- Tokens.
-- Secrets.
-- IPs públicos sensíveis.
-- Dados de empresa real.
+Always hide:
 
-## Práticas de controle de acesso
+- Subscription IDs
+- Tenant IDs
+- Client IDs
+- Secrets
+- Access Keys
+- SAS URLs
+- Tokens
+- Public IPs
+- Corporate data
 
-- Utilizar Azure RBAC para controle de permissões.
-- Atribuir permissões a grupos sempre que possível.
-- Aplicar o princípio do menor privilégio.
-- Evitar uso desnecessário da role Owner.
-- Preferir roles específicas, como Reader, Contributor, Network Contributor ou Storage Blob Data Reader.
-- Remover permissões temporárias após os testes.
-- Evitar atribuições diretas para usuários quando grupos puderem ser utilizados.
+---
 
-## Práticas de segurança para Storage
+# Identity Security
 
-- Bloquear acesso público anônimo, salvo quando o laboratório exigir o contrário.
-- Exigir HTTPS.
-- Utilizar TLS 1.2 ou superior.
-- Evitar exposição de access keys.
-- Preferir autenticação com Microsoft Entra ID quando possível.
-- Gerar SAS tokens com escopo limitado.
-- Utilizar SAS tokens com expiração curta.
-- Evitar SAS com permissões amplas, como escrita ou exclusão, sem necessidade.
+The following practices are adopted:
 
-## Práticas de segurança para rede
+- Enable Multi-Factor Authentication whenever possible
+- Apply the Principle of Least Privilege
+- Prefer Azure RBAC Groups instead of direct user assignments
+- Remove temporary permissions after testing
+- Review guest accounts regularly
+- Separate administrative and standard accounts
 
-- Evitar IP público quando não for necessário.
-- Utilizar NSGs para controlar tráfego de entrada e saída.
-- Restringir portas administrativas, como RDP e SSH.
-- Preferir Azure Bastion ou acesso privado quando aplicável.
-- Utilizar Private Endpoints para serviços sensíveis quando o cenário exigir.
-- Validar regras efetivas de segurança durante troubleshooting.
+---
 
-## Práticas de identidade
+# Storage Security
 
-- Utilizar MFA sempre que possível.
-- Evitar uso de contas administrativas para tarefas do dia a dia.
-- Criar usuários e grupos de laboratório separados.
-- Utilizar grupos para atribuições RBAC.
-- Revisar usuários convidados.
-- Remover contas de teste ao final dos laboratórios, quando não forem mais necessárias.
+- Disable anonymous access
+- Require HTTPS
+- Enforce TLS 1.2 or newer
+- Prefer Microsoft Entra ID authentication
+- Limit SAS permissions
+- Configure short SAS expiration times
 
-## Práticas de limpeza segura
+---
 
-Após cada laboratório:
+# Network Security
 
-- Remover recursos que não serão reutilizados.
-- Remover permissões temporárias.
-- Remover SAS tokens ou garantir que tenham expiração curta.
-- Excluir Resource Groups de laboratório.
-- Verificar se não ficaram discos, IPs públicos, snapshots ou backups órfãos.
+- Avoid Public IPs whenever possible
+- Use Network Security Groups
+- Restrict RDP and SSH access
+- Prefer Azure Bastion
+- Use Private Endpoints whenever appropriate
 
-## Aviso
+---
 
-Este repositório tem finalidade educacional e de portfólio.
+# Resource Cleanup
 
-Os laboratórios são executados em ambiente pessoal de estudos e não contêm dados de produção, informações corporativas reais ou credenciais sensíveis.
+After every laboratory:
+
+- Remove unused resources
+- Remove temporary permissions
+- Remove temporary SAS tokens
+- Delete Resource Groups
+- Verify orphaned resources
+
+---
+
+# Disclaimer
+
+This repository is intended for educational purposes and technical portfolio development.
+
+All laboratories are executed in a personal Azure environment.
+
+No production resources, corporate information or sensitive credentials are published.

@@ -1,260 +1,168 @@
-# ============================================================
-# Semana 01 - Governança Básica: Resource Groups, Tags, Budget, Lock e RBAC
-# AZ-104 - Microsoft Azure Administrator
-# ============================================================
+# Azure CLI Commands - Week 01
 
-# Objetivo:
-# Criar uma base inicial de governança no Azure utilizando:
-# - Resource Groups
-# - Tags
-# - Budget
-# - Lock CanNotDelete
-# - Azure RBAC Reader
-# - Validação e limpeza dos recursos
+This document contains all Azure CLI commands used during the Week 01 laboratory.
 
+---
 
-# ============================================================
-# Etapa 0 - Validar contexto da assinatura
-# ============================================================
+# Resource Groups
 
-az account show --output table
+## Create Resource Group
 
-az group list --output table
-
-
-# ============================================================
-# Variáveis utilizadas no laboratório
-# ============================================================
-
-LOCATION="eastus"
-
-RG_CORE="rg-az104-wk01-core-lab"
-RG_SHELL="rg-az104-wk01-core-shell-lab"
-
-BUDGET_NAME="budget-az104-lab-shell-monthly"
-
-LOCK_NAME="lock-rg-az104-wk01-cannotdelete"
-
-# Usuário fictício/laboratório utilizado para RBAC Reader
-# Substituir pelo UPN real do usuário de laboratório antes de executar.
-READER_USER_UPN="usuario-lab@tenant.onmicrosoft.com"
-
-
-# ============================================================
-# Etapa 1 - Criar Resource Group com tags via Azure CLI
-# ============================================================
-
+```bash
 az group create \
-  --name $RG_SHELL \
-  --location $LOCATION \
-  --tags Owner=Thiago Project=AZ-104 Environment=Lab Week=01 Purpose=Study CostCenter=Study DeleteAfter=2026-10-31
+  --name rg-az104-wk01-shell-lab \
+  --location eastus \
+  --tags \
+      Owner=Thiago \
+      Purpose="AZ-104 Study" \
+      Environment=Study \
+      Week=01 \
+      DeleteAfter=2026-10-31 \
+      CostCenter=Study
+```
 
+---
 
-# Validar Resource Group criado via CLI
+## Show Resource Group
 
+```bash
 az group show \
-  --name $RG_SHELL \
-  --output table
+    --name rg-az104-wk01-shell-lab \
+    --output table
+```
 
+---
 
-# Listar Resource Groups
+## List Resource Groups
 
+```bash
 az group list \
-  --output table
+    --output table
+```
 
+---
 
-# Observação:
-# O Resource Group abaixo também foi criado pelo Azure Portal durante o laboratório:
-# rg-az104-wk01-core-lab
+# RBAC
 
+## Get Resource Group ID
 
-# ============================================================
-# Etapa 2 - Budget Management
-# ============================================================
-
-# O Budget foi criado com sucesso pelo Azure Portal.
-#
-# Configuração utilizada:
-# Name: budget-az104-lab-shell-monthly
-# Amount: USD 20
-# Time Grain: Monthly
-# Scope: Subscription
-
-
-# Tentativa de criação do Budget via Azure CLI
-# Resultado obtido: HTTP 400 - Invalid budget configuration
-# Observação: o grupo de comandos 'az consumption' está em Preview.
-
-az consumption budget create \
-  --budget-name $BUDGET_NAME \
-  --category Cost \
-  --amount 20 \
-  --start-date 2026-07-01 \
-  --end-date 2026-09-30 \
-  --time-grain Monthly
-
-
-# ============================================================
-# Etapa 3 - Lock CanNotDelete
-# ============================================================
-
-# Criar lock CanNotDelete no Resource Group principal
-
-az lock create \
-  --name $LOCK_NAME \
-  --resource-group $RG_CORE \
-  --lock-type CanNotDelete
-
-
-# Listar locks existentes
-
-az lock list \
-  --resource-group $RG_CORE \
-  --output table
-
-
-# Validar comportamento do lock
-# Resultado esperado: erro ScopeLocked
-# O Resource Group não deve ser excluído enquanto o lock estiver ativo.
-
-az group delete \
-  --name $RG_CORE \
-  --yes
-
-
-# ============================================================
-# Etapa 4 - Azure RBAC Reader
-# ============================================================
-
-# Obter o ID do Resource Group para usar como escopo
-
+```bash
 RG_ID=$(az group show \
-  --name $RG_CORE \
-  --query id \
-  -o tsv)
+    --name rg-az104-wk01-shell-lab \
+    --query id \
+    -o tsv)
+```
 
-echo $RG_ID
+---
 
+## Create Reader Assignment
 
-# Listar usuários do Entra ID para identificar usuário de laboratório
-# Atenção: antes de publicar prints, ocultar UPNs, Object IDs e dados sensíveis.
-
-az ad user list \
-  --query "[].{Nome:displayName,UPN:userPrincipalName,ObjectId:id}" \
-  -o table
-
-
-# Criar role assignment Reader no escopo do Resource Group
-# Importante:
-# - Não usar --resource-group neste comando.
-# - O comando az role assignment create exige --scope.
-# - Não digitar placeholders como <OBJECT_ID> diretamente no Bash.
-
+```bash
 az role assignment create \
-  --assignee $READER_USER_UPN \
-  --role Reader \
-  --scope $RG_ID
+    --assignee developer@thiagorubio.com.br \
+    --role Reader \
+    --scope $RG_ID
+```
 
+---
 
-# Validar role assignments Reader no escopo do Resource Group
+## List Role Assignments
 
+```bash
 az role assignment list \
-  --scope $RG_ID \
-  --role Reader \
-  --output table
+    --scope $RG_ID \
+    --output table
+```
 
+---
 
-# ============================================================
-# Troubleshooting documentado
-# ============================================================
+# Resource Locks
 
-# Erro 1:
-# Uso incorreto de placeholder literal no Bash:
-#
-# az role assignment create --assignee <OBJECT_ID> --role Reader --scope $RG_ID
-#
-# Causa:
-# O Bash interpreta o caractere '<' como redirecionamento.
-#
-# Correção:
-# Substituir o placeholder por um UPN real, Object ID real ou variável.
+## Create CanNotDelete Lock
 
+```bash
+az lock create \
+    --name lock-rg-az104-wk01-shell-cannotdelete \
+    --resource-group rg-az104-wk01-shell-lab \
+    --lock-type CanNotDelete
+```
 
-# Erro 2:
-# Uso incorreto do parâmetro --resource-group no comando de RBAC:
-#
-# az role assignment create \
-#   --assignee usuario-lab@tenant.onmicrosoft.com \
-#   --role Reader \
-#   --resource-group rg-az104-wk01-core-lab
-#
-# Resultado:
-# the following arguments are required: --scope
-#
-# Correção:
-# Obter o ID do Resource Group e utilizar --scope $RG_ID.
+---
 
+## List Locks
 
-# ============================================================
-# Limpeza dos recursos
-# ============================================================
+```bash
+az lock list \
+    --query "[?level=='CanNotDelete'].{LockName:name,ResourceGroup:resourceGroup}" \
+    --output table
+```
 
-# 1. Remover role assignment Reader
-# Substituir o valor da variável READER_USER_UPN pelo usuário utilizado no laboratório.
+---
 
-az role assignment delete \
-  --assignee $READER_USER_UPN \
-  --role Reader \
-  --scope $RG_ID
+## Delete Lock
 
+```bash
+az lock delete \
+    --name lock-rg-az104-wk01-shell-cannotdelete \
+    --resource-group rg-az104-wk01-shell-lab
+```
 
-# 2. Remover lock CanNotDelete
-# É necessário remover o lock antes de excluir o Resource Group.
+---
 
-LOCK_ID=$(az lock show \
-  --name $LOCK_NAME \
-  --resource-group $RG_CORE \
-  --query id \
-  -o tsv)
+# Cost Management
 
-az lock delete --ids $LOCK_ID
+## Azure Budget
 
+Attempted using Azure CLI:
 
-# 3. Excluir Resource Group criado pelo Azure CLI
+```bash
+az consumption budget create \
+    --budget-name "budget-az104-lab-monthly" \
+    --category "cost" \
+    --amount 20 \
+    -s 2026-03-07 \
+    -e 2026-10-31 \
+    --time-grain Monthly
+```
 
+Result:
+
+```
+Invalid budget configuration,
+please use filter interface with 2019-05-01-preview version.
+```
+
+The budget was created using the Azure Portal instead.
+
+---
+
+# Cleanup
+
+## Delete Resource Group
+
+```bash
 az group delete \
-  --name $RG_SHELL \
-  --yes \
-  --no-wait
+    --name rg-az104-wk01-shell-lab \
+    --yes \
+    --no-wait
+```
 
+---
 
-# 4. Excluir Resource Group principal do laboratório
+## Delete Resource Group (Core Lab)
 
+```bash
 az group delete \
-  --name $RG_CORE \
-  --yes \
-  --no-wait
+    --name rg-az104-wk01-core-lab \
+    --yes \
+    --no-wait
+```
 
+---
 
-# 5. Validar limpeza
+# Notes
 
-az group list \
-  --output table
-
-
-# ============================================================
-# Observação sobre Cloud Shell Storage
-# ============================================================
-
-# O Resource Group cloud-shell-storage-eastus pode ser criado automaticamente pelo Azure Cloud Shell.
-# Ele armazena arquivos persistentes do Cloud Shell.
-#
-# Não remover automaticamente, a menos que você tenha certeza de que não precisa mais dos arquivos
-# salvos no Cloud Shell.
-#
-# Exemplo, se decidir remover manualmente:
-#
-# az group delete \
-#   --name cloud-shell-storage-eastus \
-#   --yes \
-#   --no-wait
+- Azure Cloud Shell was used during all exercises.
+- Authentication performed using Microsoft Entra ID.
+- Resource Groups were created in East US.
+- A custom domain (thiagorubio.com.br) was used for user accounts.

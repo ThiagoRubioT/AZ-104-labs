@@ -1,69 +1,90 @@
-# Convenção de Nomes
+# Azure Naming Conventions
 
-Este documento descreve o padrão de nomenclatura utilizado nos laboratórios da certificação AZ-104.
+This document describes the naming standards adopted throughout this repository.
 
-## Objetivo
+The goal is to keep Azure resources organized, consistent and easy to identify across all laboratory environments.
 
-O objetivo da convenção de nomes é manter os recursos do Azure organizados, fáceis de identificar e simples de remover após cada laboratório.
+---
 
-## Padrão geral
+# General Naming Pattern
 
-<tipo-do-recurso>-az104-wk<numero-da-semana>-<finalidade>-lab
+```
+<resource-type>-az104-wk<week-number>-<purpose>-lab
+```
 
-## Exemplos
+Example:
 
-| Recurso                 | Exemplo                  |
-| ----------------------- | ------------------------ |
-| Resource Group          | `rg-az104-wk01-core-lab` |
-| Storage Account         | `staz104wk04lab001`      |
-| Virtual Network         | `vnet-az104-wk09-lab`    |
-| Subnet                  | `snet-az104-wk09-app`    |
-| Network Security Group  | `nsg-az104-wk10-web`     |
-| Route Table             | `rt-az104-wk10-lab`      |
-| Public IP               | `pip-az104-wk07-win01`   |
-| Network Interface       | `nic-az104-wk07-win01`   |
-| Virtual Machine         | `vm-az104-wk07-win01`    |
-| Managed Disk            | `disk-az104-wk07-data01` |
-| Log Analytics Workspace | `law-az104-wk12-lab`     |
-| Recovery Services Vault | `rsv-az104-wk13-lab`     |
+```
+rg-az104-wk01-core-lab
+```
 
-## Prefixos utilizados
+---
 
-| Prefixo | Tipo de recurso         |
-| ------- | ----------------------- |
-| `rg`    | Resource Group          |
-| `st`    | Storage Account         |
-| `vnet`  | Virtual Network         |
-| `snet`  | Subnet                  |
-| `nsg`   | Network Security Group  |
-| `rt`    | Route Table             |
-| `pip`   | Public IP               |
-| `nic`   | Network Interface       |
-| `vm`    | Virtual Machine         |
-| `disk`  | Managed Disk            |
-| `law`   | Log Analytics Workspace |
-| `rsv`   | Recovery Services Vault |
-| `kv`    | Key Vault               |
+# Resource Naming Examples
 
-## Tags utilizadas
+| Azure Resource | Example |
+|----------------|---------|
+| Resource Group | `rg-az104-wk01-core-lab` |
+| Storage Account | `staz104wk04lab001` |
+| Virtual Network | `vnet-az104-wk09-lab` |
+| Subnet | `snet-az104-wk09-app` |
+| Network Security Group | `nsg-az104-wk10-web` |
+| Route Table | `rt-az104-wk10-lab` |
+| Public IP | `pip-az104-wk07-win01` |
+| Network Interface | `nic-az104-wk07-win01` |
+| Virtual Machine | `vm-az104-wk07-win01` |
+| Managed Disk | `disk-az104-wk07-data01` |
+| Log Analytics Workspace | `law-az104-wk12-lab` |
+| Recovery Services Vault | `rsv-az104-wk13-lab` |
+| Key Vault | `kv-az104-wk11-lab` |
 
-| Tag           | Exemplo      |
-| ------------- | ------------ |
-| `Owner`       | `Thiago`     |
-| `Project`     | `AZ-104`     |
-| `Environment` | `Lab`        |
-| `Week`        | `01`         |
-| `Purpose`     | `Study`      |
-| `CostCenter`  | `Study`      |
-| `DeleteAfter` | `2026-10-31` |
+---
 
-## Observações
+# Resource Prefixes
 
-Storage Accounts possuem regras específicas de nomenclatura:
-- Devem ter nome globalmente único.
-- Devem conter apenas letras minúsculas e números.
-- Não podem conter hífen.
-- Devem ter entre 3 e 24 caracteres.
+| Prefix | Resource |
+|---------|----------|
+| rg | Resource Group |
+| st | Storage Account |
+| vnet | Virtual Network |
+| snet | Subnet |
+| nsg | Network Security Group |
+| rt | Route Table |
+| pip | Public IP |
+| nic | Network Interface |
+| vm | Virtual Machine |
+| disk | Managed Disk |
+| law | Log Analytics Workspace |
+| rsv | Recovery Services Vault |
+| kv | Key Vault |
 
-Exemplo válido:
-`staz104wk04lab001`
+---
+
+# Standard Tags
+
+| Tag | Example |
+|-----|---------|
+| Owner | Thiago |
+| Project | AZ-104 |
+| Environment | Lab |
+| Week | 01 |
+| Purpose | Study |
+| CostCenter | Study |
+| DeleteAfter | 2026-10-31 |
+
+---
+
+# Storage Account Naming Rules
+
+Storage Accounts have specific Azure naming requirements:
+
+- Globally unique
+- Lowercase letters and numbers only
+- No hyphens
+- Between 3 and 24 characters
+
+Example:
+
+```
+staz104wk04lab001
+```

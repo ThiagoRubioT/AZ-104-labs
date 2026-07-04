@@ -1,240 +1,207 @@
-# Semana 01 — Governança Básica: Resource Groups, Tags, Budget, Lock e RBAC
+# AZ-104 Lab - Week 01
+## Azure Resource Groups, RBAC, Resource Locks and Cost Management
 
-Esta semana teve como objetivo criar a base inicial de governança para os laboratórios da certificação **AZ-104: Microsoft Azure Administrator**.
+> Hands-on laboratory developed while preparing for the Microsoft AZ-104 certification.
 
-O laboratório consolidou conceitos fundamentais de administração Azure, incluindo organização de recursos, padronização por tags, controle de custos, proteção contra exclusão acidental e atribuição de permissões com Azure RBAC.
+---
 
-## Objetivo
+## Overview
 
-Criar uma estrutura inicial de governança no Azure utilizando:
+This lab demonstrates the fundamental Azure Resource Manager (ARM) concepts covered during Week 01 of the AZ-104 learning path.
 
-- Resource Groups.
-- Tags.
-- Budget.
-- Lock do tipo `CanNotDelete`.
-- Azure RBAC com role `Reader`.
-- Validação via Azure Portal e Azure CLI.
-- Processo de limpeza dos recursos.
+The exercises include:
 
-## Conceitos praticados
+- Creating Resource Groups
+- Managing resources using Azure CLI
+- Assigning Azure RBAC roles
+- Testing permissions with different users
+- Creating Resource Locks
+- Managing Resource Groups
+- Configuring Cost Management Budgets
+- Cleaning up deployed resources
 
-- Hierarquia de escopo no Azure.
-- Diferença entre Subscription, Resource Group e Resource.
-- Organização de recursos por ciclo de vida.
-- Aplicação de tags para governança e controle de custos.
-- Criação de Budget para acompanhamento de consumo.
-- Uso de Management Locks para proteção contra exclusão.
-- Atribuição de permissões com Azure RBAC.
-- Princípio do menor privilégio.
-- Validação e troubleshooting via Azure CLI.
+---
 
-## Recursos utilizados
+## Objectives
 
-| Recurso | Finalidade |
-|---|---|
-| Resource Group | Organização dos recursos do laboratório |
-| Tags | Identificação de proprietário, projeto, ambiente e controle de custos |
-| Budget | Acompanhamento de consumo da assinatura |
-| Management Lock | Proteção contra exclusão acidental |
-| Azure RBAC | Controle de acesso por escopo |
-| Role Reader | Permissão de leitura para usuário de laboratório |
+- Understand Azure Resource Groups
+- Practice Azure CLI administration
+- Configure Azure RBAC
+- Validate least privilege access
+- Protect resources using CanNotDelete Locks
+- Configure Azure Budgets
+- Practice resource cleanup
 
-## Estrutura criada
+---
 
-| Item | Nome |
-|---|---|
-| Resource Group | `rg-az104-wk01-core-lab` |
-| Resource Group via CLI | `rg-az104-wk01-core-shell-lab` |
-| Budget | `budget-az104-lab-shell-monthly` |
-| Lock | `lock-rg-az104-wk01-cannotdelete` |
-| Role | `Reader` |
+## Technologies
 
-## Tags utilizadas
+- Azure Resource Manager
+- Azure CLI
+- Azure Cloud Shell
+- Azure RBAC
+- Azure Resource Locks
+- Azure Cost Management
+- Microsoft Entra ID
 
-As tags foram aplicadas para facilitar organização, rastreabilidade, governança e controle de custos.
+---
 
-| Tag | Valor |
-|---|---|
-| `Owner` | `Thiago` |
-| `Project` | `AZ-104` |
-| `Environment` | `Lab` |
-| `Week` | `01` |
-| `Purpose` | `Study` |
-| `CostCenter` | `Study` |
-| `DeleteAfter` | `2026-10-31` |
+## Lab Environment
 
-## Etapa 1 — Resource Groups e Tags
+| Item | Value |
+|------|-------|
+| Subscription | Azure Subscription 1 |
+| Region | East US |
+| Authentication | Microsoft Entra ID |
+| Azure CLI | Azure Cloud Shell |
+| Tenant | thiagorubio.com.br |
 
-Foram criados Resource Groups pelo Azure Portal e pelo Azure CLI para praticar as duas formas de administração.
+---
 
-A criação via Azure CLI também permitiu validar o uso de tags diretamente na implantação do recurso.
+## Lab Steps
 
-### Validação
+### 1. Create Resource Groups
 
-- Resource Groups criados com sucesso.
-- Tags aplicadas corretamente.
-- Recursos visíveis no Azure Portal.
-- Validação realizada via Azure CLI.
+Create two Resource Groups using Azure CLI with custom tags.
 
-### Screenshot
+![Resource Group Created](images/resource-group-created.png)
 
-![Resource Groups criados via Azure CLI](./screenshots/01-resource-group-created-cli.png)
-![Resource Groups criados via Azure CLI](./screenshots/01-resource-group-delete-cli.png)
+---
 
-## Etapa 2 — Budget Management
+### 2. Verify Resource Groups
 
-Foi criado um Budget mensal no Azure Portal para acompanhar o consumo da assinatura utilizada nos laboratórios da AZ-104.
+List all Resource Groups.
 
-### Configuração do Budget
+![Resource Group List](images/resource-group-list.png)
 
-| Configuração | Valor |
-|---|---|
-| Name | `budget-az104-lab-shell-monthly` |
-| Amount | `USD 20` |
-| Time Grain | `Monthly` |
-| Scope | Subscription |
+---
 
-### Azure CLI
+### 3. Configure Azure RBAC
 
-Também foi realizada uma tentativa de criação do Budget via Azure CLI utilizando o comando:
+Assign the Reader role using Azure CLI and validate the assignment in the Azure Portal.
 
+CLI
 
-`az consumption budget create`
-## Resultado
+![Reader CLI](images/reader-role-created-cli.png)
 
-HTTP 400 - Invalid budget configuration
+Portal
 
-## Observação
+![Reader Portal](images/reader-role-created-portal.png)
 
-O Budget foi criado com sucesso pelo Azure Portal.
+---
 
-Durante a tentativa via Azure CLI, o comando retornou erro HTTP 400. O próprio terminal informou que o grupo de comandos az consumption está em Preview, indicando que o comportamento pode variar ou exigir parâmetros/API diferentes.
+### 4. Validate Permissions
 
-Para este laboratório, a criação pelo Azure Portal foi considerada válida, pois o objetivo principal era configurar controle de custo na assinatura de estudos.
+Validate access using dedicated Reader and Developer accounts.
 
-### Screenshot
-Colocar Screenshot do lab 2
+Reader Account
 
-## Etapa 3 - Lock CanNotDelete
+![Reader Validation](images/reader-access-validation.png)
 
-Foi aplicado um lock do tipo CanNotDelete no Resource Group rg-az104-wk01-core-lab para validar a proteção contra exclusão acidental.
+![Reader Portal](images/reader-access-validation-portal.png)
 
-Após a criação do lock, foi realizada uma tentativa de exclusão do Resource Group. A operação falhou conforme esperado, retornando erro ScopeLocked.
+Developer Account
 
-Esse comportamento confirmou que o lock estava ativo e impedindo a exclusão do Resource Group.
+![Developer Validation](images/developer-access-validation.png)
 
-Validação
-Lock criado com sucesso.
-Lock listado via Azure CLI.
-Tentativa de exclusão bloqueada.
-Erro ScopeLocked retornado conforme esperado.
+![Developer Portal](images/developer-role-validation.png)
 
-### Screenshot
-Colocar Screenshot do lab 3
+---
 
-## Etapa 4 - RBAC Reader
+### 5. Protect Resources
 
-Foi realizada uma atribuição de Azure RBAC no escopo do Resource Group rg-az104-wk01-core-lab.
+Create a CanNotDelete Resource Lock.
 
-A role Reader foi atribuída a um usuário de laboratório para validar o princípio de menor privilégio.
+![Resource Lock](images/resource-lock-created.png)
 
-O teste demonstrou que a role Reader permite visualizar recursos no escopo definido, mas não permite criar, alterar, excluir recursos ou atribuir permissões.
+---
 
-Validação
-Resource Group identificado via Azure CLI.
-Role Reader atribuída com sucesso.
-Role assignment criada no escopo do Resource Group.
-Atribuição validada no Azure Portal e via Azure CLI.
+### 6. Configure Budget
 
-### Screenshot
-Colocar Screenshot  lab4
+Configure a monthly Azure Budget.
 
-## Troubleshooting
+![Budget](images/budget-created.png)
 
-Durante os testes, alguns comportamentos importantes foram documentados.
+---
 
-Erro ao criar Budget via Azure CLI, o comando az consumption budget create retornou erro HTTP 400:
-`Invalid budget configuration`
-O erro aparenta estar relacionado ao grupo de comandos az consumption, que está em Preview.
+### 7. Cleanup
 
-A alternativa utilizada foi criar o Budget diretamente pelo Azure Portal.
+Remove Locks and delete Resource Groups.
 
-Erro ao usar parâmetro incorreto no RBAC
+![Cleanup](images/cleanup-resources.png)
 
-Também foi testado o uso de --resource-group no comando az role assignment create.
+---
 
-O comando exige o parâmetro --scope, utilizando o ID completo do escopo.
+# Challenges Encountered
 
-A correção foi obter o ID do Resource Group e utilizar:
-`--scope $RG_ID`
+## Azure CLI Budget Preview Issue
 
-Comandos utilizados
+### Error
 
-Os comandos completos utilizados neste laboratório estão disponíveis no arquivo:
+```
+Invalid budget configuration,
+please use filter interface with 2019-05-01-preview version
+```
 
-commands.azcli
+### Root Cause
 
-## Limpeza dos recursos
+The Azure CLI Budget command currently relies on a preview API that is not fully compatible with the latest Cost Management implementation.
 
-Após a validação dos testes, os recursos criados para o laboratório devem ser removidos para evitar custos desnecessários.
+### Resolution
 
-Antes de excluir o Resource Group protegido por lock, é necessário remover o lock CanNotDelete.
+Configured the Budget using the Azure Portal instead.
 
-Ordem recomendada de limpeza
-Remover role assignment de teste.
-Remover lock `CanNotDelete`.
-Excluir Resource Groups criados para o laboratório.
-Validar no Azure Portal se os recursos foram removidos.
-Revisar Cost Management.
+---
 
-## Checklist final da Semana 1
-[x] Criar Resource Group pelo Azure Portal.
-[x] Criar Resource Group pelo Azure CLI.
-[x] Aplicar tags.
-[x] Criar Budget pelo Azure Portal.
-[x] Documentar erro do Budget via Azure CLI.
-[x] Criar lock CanNotDelete.
-[x] Validar bloqueio de exclusão com erro ScopeLocked.
-[x] Criar role assignment com role Reader.
-[x] Validar Azure RBAC no escopo do Resource Group.
-[x] Documentar comandos utilizados.
-[x] Registrar screenshots com dados sensíveis ocultos.
-[x] Remover permissões temporárias.
-[x] Remover lock antes da limpeza final.
-[x] Excluir Resource Groups de laboratório.
-[x] Validar Cost Management após a limpeza.
+## Missing Scope Parameter
 
-## Lições aprendidas
-Resource Groups ajudam a organizar recursos por ciclo de vida.
-Tags são fundamentais para governança, rastreabilidade e controle de custos.
-Budgets ajudam a acompanhar consumo, mas não bloqueiam automaticamente cobranças.
-Alguns comandos da Azure CLI podem estar em Preview e apresentar limitações.
-Locks do tipo CanNotDelete protegem recursos contra exclusão acidental.
-Azure RBAC controla quem pode fazer o quê e em qual escopo.
-A role Reader permite visualização, mas não permite alteração ou exclusão de recursos.
-O parâmetro --scope é essencial em comandos de role assignment.
-Documentar erros e correções torna o portfólio mais realista e profissional.
-Todo laboratório deve terminar com validação e plano de limpeza.
+### Error
 
+```
+the following arguments are required:
 
-## Segurança
+--scope
+```
 
-Nenhum dado sensível deve ser publicado neste repositório.
+![Scope Error](images/role-assignment-missing-scope-error.png)
 
-Antes de publicar screenshots, foram ocultados ou removidos:
+### Root Cause
 
- - Subscription ID.
- - Tenant ID.
- - UPNs/e-mails completos.
- - Object IDs.
- - Principal IDs.
- - Role Assignment IDs.
- - Dados pessoais ou sensíveis.
+The role assignment command requires the Resource Group ID to be provided as the Scope.
 
+### Resolution
 
-## Status
+Retrieve the Resource Group ID first and reuse it in the role assignment command.
 
-Concluído tecnicamente.
+---
 
+## Resource Lock Preventing Deletion
 
+### Error
 
+The Resource Group could not be deleted because a CanNotDelete Lock was applied.
+
+### Resolution
+
+Remove the Lock before deleting the Resource Group.
+
+---
+
+# Lessons Learned
+
+- Azure RBAC permissions depend on the selected Scope.
+- Resource Locks override delete operations.
+- Azure CLI preview commands may not behave as expected.
+- Azure Portal can be used as an alternative when preview APIs fail.
+- Testing permissions with dedicated accounts is essential.
+
+---
+
+# Next Steps
+
+- Azure Policy
+- Tags
+- ARM Templates
+- Bicep
+- Terraform
+- Networking
